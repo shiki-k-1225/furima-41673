@@ -1,24 +1,65 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Tables
 
-Things you may want to cover:
+### Users
 
-* Ruby version
+| Column     | Type    | Options                   |
+|------------|---------|---------------------------|
+| id         | integer | null: false, primary key  |
+| name       | string  | null: false               |
+| email      | string  | null: false, unique: true |
+| password   | string  | null: false               |
+| created_at | datetime| null: false               |
 
-* System dependencies
+#### Association
+- has_many :items
+- has_many :purchases
 
-* Configuration
+---
 
-* Database creation
+### Items
 
-* Database initialization
+| Column       | Type       | Options                        |
+|--------------|------------|--------------------------------|
+| id           | integer    | null: false, primary key       |
+| name         | string     | null: false                    |
+| price        | integer    | null: false                    |
+| description  | text       |                                |
+| user_id      | references | null: false, foreign_key: true |
+| created_at   | datetime   | null: false                    |
 
-* How to run the test suite
+#### Association
+- belongs_to :user
+- has_one :purchase
 
-* Services (job queues, cache servers, search engines, etc.)
+---
 
-* Deployment instructions
+### Purchases
 
-* ...
+| Column     | Type       | Options                        |
+|------------|------------|--------------------------------|
+| id         | integer    | null: false, primary key       |
+| user_id    | references | null: false, foreign_key: true |
+| item_id    | references | null: false, foreign_key: true |
+| created_at | datetime   | null: false                    |
+
+#### Association
+- belongs_to :user
+- belongs_to :item
+- has_one :shipping_address
+
+---
+
+### ShippingAddresses
+
+| Column       | Type       | Options                        |
+|--------------|------------|--------------------------------|
+| id           | integer    | null: false, primary key       |
+| purchase_id  | references | null: false, foreign_key: true |
+| address      | string     | null: false                    |
+| phone_number | string     | null: false                    |
+| created_at   | datetime   | null: false                    |
+
+#### Association
+- belongs_to :purchase
