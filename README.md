@@ -51,11 +51,11 @@
 #### Association
 - belongs_to :user
 - belongs_to :item
-- has_one :shipping_info
+- has_one :shipping_address
 
 ---
 
-### ShippingInfos
+### ShippingAddresses
 
 | Column          | Type       | Options                        |
 |-----------------|------------|--------------------------------|
