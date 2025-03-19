@@ -7,9 +7,13 @@
     </div>
     
     <% if flash[:notice] %>
-      <div class="flash-message notice"><%= flash[:notice] %></div>
+      <div class="error-alert">
+        <span class="error-message"><%= flash[:notice] %></span>
+      </div>
     <% elsif flash[:alert] %>
-      <div class="flash-message alert"><%= flash[:alert] %></div>
+      <div class="error-alert">
+        <span class="error-message"><%= flash[:alert] %></span>
+      </div>
     <% end %>
 
     <div class="form-group">
