@@ -1,6 +1,10 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
 
+  def index
+    @items = Item.order(created_at: :desc)
+  end
+
   def new
     @item = Item.new
   end
@@ -13,6 +17,11 @@ class ItemsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
+
+  # コメントアウトして次回実装時に差分が確認できるようにします
+# def show
+#   @item = Item.find(params[:id])
+# end
 
   private
 
