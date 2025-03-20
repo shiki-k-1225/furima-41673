@@ -53,17 +53,13 @@
           <li class='list'>
             <%= link_to item_path(item) do %>
               <div class='item-img-content'>
-                <%= image_tag item.image.attached? ? item.image : 'default-item.png', class: "item-img" %>
-                <% if item.purchase.present? %>
-                  <div class='sold-out'>
-                    <span>Sold Out!!</span>
-                  </div>
-                <% end %>
+                <%# 修正箇所: 画像が存在する場合のみ表示し、リンク切れを防止 %>
+                <%= image_tag item.image, class: "item-img" if item.image.attached? %>
               </div>
               <div class='item-info'>
                 <h3 class='item-name'><%= item.name %></h3>
                 <div class='item-price'>
-                  <%# 修正箇所: ActiveHashによるアソシエーションを利用 %>
+                  <%# ActiveHashのアソシエーションを利用 %>
                   <span>¥<%= item.price %><br><%= item.shipping_charge.name %></span>
                 </div>
               </div>
