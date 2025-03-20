@@ -43,6 +43,35 @@
   </div>
   <%# /FURIMAが選ばれる3つの理由部分 %>
 
+  <%# FURIMAの特徴 %>
+  <div class='feature-contents'>
+    <h2 class='title'>FURIMAの特徴</h2>
+    <ul class='feature-lists'>
+      <li class='list'>
+        <%= image_tag "furima-intro04.png", class:"list-pict" %>
+        <h3 class='feature-list-text'>簡単に売り買いできる</h3>
+        <p class='feature-list-description'>
+          スマホひとつで、いつでもどこでも簡単に出品・購入が可能！
+        </p>
+      </li>
+      <li class='list'>
+        <%= image_tag "furima-intro05.png", class:"list-pict" %>
+        <h3 class='feature-list-text'>売上金は即日振込みに対応</h3>
+        <p class='feature-list-description'>
+          午前9時までに振込を依頼いただければ、翌日に指定の口座に入金いたします。
+        </p>
+      </li>
+      <li class='list'>
+        <%= image_tag "furima-intro06.png", class:"list-pict" %>
+        <h3 class='feature-list-text'>様々な支払いに対応</h3>
+        <p class='feature-list-description'>
+          お支払いは、クレジットカードだけでなく、ポイントや売上金など多彩な方法があります。
+        </p>
+      </li>
+    </ul>
+  </div>
+  <%# /FURIMAの特徴 %>
+
   <%# 商品一覧 %>
   <div class='item-contents'>
     <h2 class='title'>ピックアップカテゴリー</h2>
@@ -53,13 +82,13 @@
           <li class='list'>
             <%= link_to item_path(item) do %>
               <div class='item-img-content'>
-                <%# 修正箇所: 画像が存在する場合のみ表示し、リンク切れを防止 %>
+                <%# 画像の存在を確認して表示 %>
                 <%= image_tag item.image, class: "item-img" if item.image.attached? %>
               </div>
               <div class='item-info'>
                 <h3 class='item-name'><%= item.name %></h3>
                 <div class='item-price'>
-                  <%# ActiveHashのアソシエーションを利用 %>
+                  <%# ActiveHashアソシエーションを使用 %>
                   <span>¥<%= item.price %><br><%= item.shipping_charge.name %></span>
                 </div>
               </div>
@@ -67,9 +96,12 @@
           </li>
         <% end %>
       <% else %>
+        <%# 商品がない場合にダミーデータを表示 %>
         <li class='list'>
           <%= link_to '#' do %>
-            <%= image_tag "https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg", class: "item-img" %>
+            <div class='item-img-content'>
+              <%= image_tag "https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg", class: "item-img" %>
+            </div>
             <div class='item-info'>
               <h3 class='item-name'>商品を出品してね！</h3>
               <div class='item-price'>
