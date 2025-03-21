@@ -18,10 +18,9 @@ class ItemsController < ApplicationController
     end
   end
 
-  # コメントアウトして次回実装時に差分が確認できるようにします
-# def show
-#   @item = Item.find(params[:id])
-# end
+  def show
+    @item = Item.find(params[:id])
+  end
 
   private
 
