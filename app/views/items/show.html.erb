@@ -31,8 +31,8 @@
         <%= link_to "商品の編集", "#" , method: :get, class: "item-red-btn" %>
         <p class="or-text">or</p>
         <%= link_to "削除", "#" , data: { turbo_method: :delete }, class: "item-destroy" %>
-      <% elsif current_user != @item.user %>
-        <%= link_to "購入画面に進む", "#" , class: "item-red-btn" %>
+      <% else %>
+        <%= link_to "購入画面に進む", new_order_path(item_id: @item.id), class: "item-red-btn" %>
       <% end %>
     <% end %>
     <%# //ログインしているユーザーと出品しているユーザーが、同一人物の場合と同一人物ではない場合で、処理を分けましょう %>
