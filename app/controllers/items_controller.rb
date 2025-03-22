@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update]
 
   def index
     @items = Item.order(created_at: :desc)
@@ -25,6 +25,22 @@ class ItemsController < ApplicationController
   def edit
     @item = Item.find(params[:id])
     redirect_to root_path unless current_user == @item.user
+  end
+
+  def update
+    @item = Item.find(params[:id])
+
+    # 編集時に画像が未変更の場合、既存の画像を保持
+    if params[:item][:image].nil?
+      params[:item][:image] = @item.image.blob if @item.image.attached?
+    end
+
+    # 商品情報の更新処理
+    if @item.update(item_params)
+      redirect_to item_path(@item), notice: '商品情報が更新されました。'
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private
