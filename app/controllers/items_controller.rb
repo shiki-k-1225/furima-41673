@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update]
-  before_action :set_item, only: [:show, :edit, :update]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
 
   def index
     @items = Item.order(created_at: :desc)
@@ -24,17 +24,12 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    # 売却済み商品の場合はトップページにリダイレクト（購入機能後実装の為コメントアウト処理）
-    # if @item.order.present?
-    #   redirect_to root_path
-    # end
-
+    # @item は before_action で設定済み
     redirect_to root_path unless current_user == @item.user
   end
 
   def update
     # @item は before_action で設定済み
-    # 商品情報の更新処理
     if @item.update(item_params)
       redirect_to item_path(@item), notice: '商品情報が更新されました。'
     else
@@ -43,9 +38,6 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @item = Item.find(params[:id])
-  
-    # 自身が出品した商品か確認
     if @item.user == current_user
       @item.destroy
       redirect_to root_path
