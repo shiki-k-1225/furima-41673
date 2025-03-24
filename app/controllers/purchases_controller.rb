@@ -1,4 +1,4 @@
-class OrdersController < ApplicationController
+class PurchasesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item
   before_action :redirect_if_invalid, only: [:index, :create]
@@ -29,6 +29,7 @@ class OrdersController < ApplicationController
   end
 
   def redirect_if_invalid
+    # 自身が出品した商品、または売却済み商品の購入画面にアクセス禁止
     if @item.purchase.present? || current_user == @item.user
       redirect_to root_path
     end

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :items do
-    resources :orders, only: [:index, :create]
+    resources :purchases, only: [:index, :create] 
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
