@@ -1,6 +1,6 @@
 const pay = () => {
-  const publicKey = gon.public_key
-  const payjp = Payjp(publicKey)
+  const publicKey = gon.public_key; // 公開鍵を取得
+  const payjp = Payjp(publicKey);
   const elements = payjp.elements();
 
   // カード情報入力フィールドの生成
@@ -20,8 +20,7 @@ const pay = () => {
     // トークン生成
     payjp.createToken(numberElement).then((response) => {
       if (response.error) {
-        console.error("トークン生成失敗:", response.error.message);
-        alert("カード情報が正しくありません。再度ご確認ください。");
+   
       } else {
         const token = response.id;
         const hiddenTokenField = document.createElement('input');
@@ -35,9 +34,8 @@ const pay = () => {
         numberElement.clear();
         expiryElement.clear();
         cvcElement.clear();
-
-        form.submit(); // トークンを含めてフォーム送信
       }
+      form.submit(); // トークンを含めてフォーム送信
     });
   });
 };

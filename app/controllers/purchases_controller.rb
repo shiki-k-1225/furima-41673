@@ -17,6 +17,7 @@ class PurchasesController < ApplicationController
       @purchase_address.save
       redirect_to root_path
     else
+      gon.public_key = ENV["PAYJP_PUBLIC_KEY"] # エラー時も公開鍵を再設定
       render :index
     end
   end
@@ -39,11 +40,15 @@ class PurchasesController < ApplicationController
   end
 
   def pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"] 
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     Payjp::Charge.create(
       amount: @item.price, # 商品の価格
       card: purchase_address_params[:token], # カードトークン
       currency: 'jpy' # 通貨
     )
+  rescue Payjp::PayjpError => e
+    Rails.logger.error("PAY.JPエラー: #{e.message}")
+    flash[:alert] = "カード決済に失敗しました。時間をおいて再度お試しください。" # ユーザーへのエラー通知
+    render :index
   end
 end
