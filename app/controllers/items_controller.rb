@@ -25,6 +25,9 @@ class ItemsController < ApplicationController
 
   def edit
     # @item は before_action で設定済み
+    if @item.purchase.present?
+         redirect_to root_path
+       end
     redirect_to root_path unless current_user == @item.user
   end
 
@@ -36,6 +39,7 @@ class ItemsController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   end
+
 
   def destroy
     if @item.user == current_user
