@@ -47,7 +47,6 @@ class PurchasesController < ApplicationController
       currency: 'jpy' # 通貨
     )
   rescue Payjp::PayjpError => e
-    Rails.logger.error("PAY.JPエラー: #{e.message}")
     flash[:alert] = "カード決済に失敗しました。時間をおいて再度お試しください。" # ユーザーへのエラー通知
     render :index
   end

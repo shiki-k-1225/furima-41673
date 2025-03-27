@@ -63,6 +63,13 @@ RSpec.describe PurchaseAddress, type: :model do
         expect(@purchase_address.errors.full_messages).to include("Phone number is invalid")
       end
 
+      it '電話番号が9桁以下だと購入できない' do
+        @purchase_address.phone_number = '123456789'
+        @purchase_address.valid?
+        expect(@purchase_address.errors.full_messages).to include("Phone number is invalid")
+      end
+
+
       it '電話番号が英数字混合では購入できない' do
         @purchase_address.phone_number = '12345abcde'
         @purchase_address.valid?
