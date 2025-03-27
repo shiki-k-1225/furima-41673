@@ -1,8 +1,7 @@
 class Item < ApplicationRecord
   belongs_to :user
   has_one_attached :image
-  # コメントアウトして次回実装時に差分が確認できるようにします
-  # has_one :purchase
+  has_one :purchase
 
   # ActiveHashアソシエーション
   extend ActiveHash::Associations::ActiveRecordExtensions
@@ -16,4 +15,9 @@ class Item < ApplicationRecord
   validates :name, :description, :price, :image, presence: true
   validates :category_id, :condition_id, :shipping_charge_id, :prefecture_id, :shipping_day_id, numericality: { other_than: 0, message: "can't be blank" }
   validates :price, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 }
+
+  # 売却済み商品の判定メソッド
+  def sold_out?
+    purchase.present?
+  end
 end

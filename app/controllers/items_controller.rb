@@ -3,7 +3,7 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
 
   def index
-    @items = Item.order(created_at: :desc)
+    @items = Item.includes(:purchase).order(created_at: :desc) # N+1問題を防ぐためincludesを追加
   end
 
   def new
@@ -25,6 +25,9 @@ class ItemsController < ApplicationController
 
   def edit
     # @item は before_action で設定済み
+    if @item.purchase.present?
+         redirect_to root_path
+       end
     redirect_to root_path unless current_user == @item.user
   end
 
@@ -36,6 +39,7 @@ class ItemsController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   end
+
 
   def destroy
     if @item.user == current_user
